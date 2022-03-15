@@ -49,14 +49,71 @@
         </b-button>
         <b-modal
           id="modal-primary"
-          ok-only
-          ok-variant="primary"
-          ok-title="Confirm"
           modal-class="modal-primary"
           centered
-          title="Delete Category"
+          title="Add Category"
+          hide-footer
         >
-          <b-card-text> Are you sure to delete this category ? </b-card-text>
+          <b-card-text>
+            <b-form enctype="multipart/form-data" @submit.prevent="addCategory">
+              <b-row>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Category name (English)"
+                    label-for="v-cat-name-en"
+                  >
+                    <b-form-input
+                      id="v-cat-name-en"
+                      placeholder="Category name (English)"
+                      required
+                      v-model="form.catEnglish"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Category name (Arabic)"
+                    label-for="v-cat-name-ar"
+                  >
+                    <b-form-input
+                      id="v-cat-name-ar"
+                      type="text"
+                      placeholder="Category name (Arabic)"
+                      required
+                      v-model="form.catArabic"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col cols="12">
+                  <b-form-group label="Category Icon" label-for="v-cat-icon">
+                    <b-form-file
+                      accept=".svg"
+                      name="catIcon"
+                      required
+                      @change="categoryIcon"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col offset-md="4">
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    type="submit"
+                    variant="primary"
+                    class="mr-1"
+                  >
+                    Add
+                  </b-button>
+                  <b-button
+                    v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+                    type="reset"
+                    variant="outline-secondary"
+                  >
+                    Reset
+                  </b-button>
+                </b-col>
+              </b-row>
+            </b-form>
+          </b-card-text>
         </b-modal>
       </div>
     </b-col>
@@ -72,9 +129,14 @@ import {
   BDropdown,
   BDropdownItem,
   BButton,
+  BFormGroup,
+  BFormInput,
+  BForm,
+  BFormFile,
 } from "bootstrap-vue";
 import Ripple from "vue-ripple-directive";
 import { PlusIcon } from "vue-feather-icons";
+import axios from "axios";
 export default {
   directives: {
     Ripple,
@@ -87,7 +149,47 @@ export default {
     BDropdown,
     BDropdownItem,
     BButton,
+    BFormGroup,
+    BFormInput,
+    BForm,
+    BFormFile,
     PlusIcon,
+  },
+  data() {
+    return {
+      form: {
+        catEnglish: "",
+        catArabic: "",
+        catIcon: null,
+      },
+    };
+  },
+  methods: {
+    categoryIcon(e) {
+      this.form.catIcon = e.target.files[0];
+    },
+    addCategory() {
+      let data = new FormData();
+      data.append("catIcon", this.form.catIcon, this.form.catIcon.name);
+      var details = JSON.stringify({
+        catEnglish: this.form.catEnglish,
+        catArabic: this.form.catArabic,
+      });
+      data.append("data", details);
+      const config = {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      };
+      axios
+        .post("http://127.0.0.1:8001/api/add-category", data, config)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(result);
+        });
+    },
   },
 };
 </script>

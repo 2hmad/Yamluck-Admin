@@ -1,28 +1,33 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col-lg-2" v-for="cat in cats" :key="cat.id">
-        <router-link :to="`editCat/${cat.id}`">
-          <div class="card">
-            <div class="card-body text-center">
-              <img
-                :src="`http://anamelctv.com/storage/cats-icons/${cat.icon}`"
-                style="max-width: 50px"
-              />
-              <h5 class="card-title" style="margin: 5px auto">
-                {{ cat.title_en }}
-              </h5>
+    <div class="card">
+      <div class="list-group list-group-flush">
+        <router-link
+          :to="`/editSubCat/${subCat.id}`"
+          v-for="subCat in subCats"
+          :key="subCat.id"
+        >
+          <div class="list-group-item">
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                color: #6e6b7b;
+              "
+            >
+              {{ subCat.title_en }}
               <b-button
                 v-ripple.400="'rgba(234, 84, 85, 0.15)'"
-                v-b-modal="`modal-danger-${cat.id}`"
+                v-b-modal="`modal-danger-${subCat.id}`"
                 variant="flat-danger"
                 class="btn-icon rounded-circle"
                 @click.prevent.stop
               >
-                <XIcon size="1.5x" />
+                <XIcon size="1x" />
               </b-button>
               <b-modal
-                :id="`modal-danger-${cat.id}`"
+                :id="`modal-danger-${subCat.id}`"
                 hide-footer
                 modal-class="modal-danger"
                 centered
@@ -37,7 +42,7 @@
                       name="delete"
                       class="btn btn-danger"
                       value="Confirm"
-                      @click.prevent="DeleteCategory([cat.id])"
+                      @click.prevent="DeleteCategory([subCat.id])"
                     />
                   </form>
                 </b-card-text>
@@ -67,19 +72,19 @@ export default {
 
   data() {
     return {
-      cats: [],
+      subCats: [],
     };
   },
   mounted() {
     axios
-      .get(`/api/categories`)
-      .then((result) => (this.cats = result.data))
+      .post(`/api/subCat/`, { catId: this.$route.params.id })
+      .then((result) => (this.subCats = result.data))
       .catch((err) => console.log(err));
   },
   methods: {
     DeleteCategory(id) {
       axios
-        .post(`/api/categories/delete`, { id: id[0] })
+        .post(`/api/subCat/delete`, { id: id[0] })
         .then((result) => window.location.reload())
         .catch((err) => console.log(err));
     },

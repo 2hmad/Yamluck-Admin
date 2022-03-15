@@ -67,6 +67,34 @@ const router = new VueRouter({
             },
         },
         {
+            path: "/editCat/:id",
+            name: "editCategories",
+            component: () => import("@/views/EditCat.vue"),
+            meta: {
+                pageTitle: "Edit Category",
+                breadcrumb: [
+                    {
+                        text: "Edit Category",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
+            path: "/editSubCat/:id",
+            name: "editSubCategories",
+            component: () => import("@/views/EditSubCat.vue"),
+            meta: {
+                pageTitle: "Edit SubCategory",
+                breadcrumb: [
+                    {
+                        text: "Edit SubCategory",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
             path: "/login",
             name: "login",
             component: () => import("@/views/Login.vue"),

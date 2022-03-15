@@ -23,3 +23,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('users', [UsersController::class, 'index']);
 Route::get('activities', [ActivitiesController::class, 'index']);
 Route::get('categories', [CategoriesController::class, 'index']);
+Route::post('categories/delete', [CategoriesController::class, 'delete']);
+Route::post('subCat', [CategoriesController::class, 'getSubCat']);
+Route::post('subCat/delete', [CategoriesController::class, 'deleteSubCat']);
+Route::post('subSubCat', [CategoriesController::class, 'getSubSubCat']);
+Route::post('subSubCat/delete', [CategoriesController::class, 'deleteSubSubCat']);
