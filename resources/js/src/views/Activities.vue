@@ -7,7 +7,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50$</h3>
+              <h3 class="fw-bolder mb-75">{{ totalBalances }}$</h3>
               <span>Total Users Balances</span>
             </div>
             <div class="avatar bg-light-primary p-50">
@@ -22,7 +22,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50$</h3>
+              <h3 class="fw-bolder mb-75">{{ spentBalances }}$</h3>
               <span>Spent Balances</span>
             </div>
             <div class="avatar bg-light-success p-50">
@@ -39,7 +39,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50$</h3>
+              <h3 class="fw-bolder mb-75">{{ todayTransactions }}$</h3>
               <span>Today's Transactions</span>
             </div>
             <div class="avatar bg-light-warning p-50">
@@ -188,6 +188,7 @@ import {
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
 import "vue-good-table/dist/vue-good-table.css";
+import axios from "axios";
 export default {
   components: {
     UserIcon,
@@ -227,6 +228,9 @@ export default {
       ],
       rows: [],
       searchTerm: "",
+      totalBalances: null,
+      spentBalances: null,
+      todayTransactions: null,
     };
   },
   computed: {
@@ -243,6 +247,20 @@ export default {
     this.$http.get("/api/activities").then((res) => {
       this.rows = res.data;
     });
+  },
+  mounted() {
+    axios
+      .get("/api/activities/getTotalBalances")
+      .then((res) => (this.totalBalances = res.data))
+      .catch((err) => console.log(err));
+    axios
+      .get("/api/activities/getSpentBalances")
+      .then((res) => (this.spentBalances = res.data))
+      .catch((err) => console.log(err));
+    axios
+      .get("/api/activities/getTodayTransactions")
+      .then((res) => (this.todayTransactions = res.data))
+      .catch((err) => console.log(err));
   },
 };
 </script>

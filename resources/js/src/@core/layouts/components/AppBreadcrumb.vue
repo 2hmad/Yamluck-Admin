@@ -116,6 +116,142 @@
           </b-card-text>
         </b-modal>
       </div>
+
+      <div v-else-if="this.$route.name == 'editCategories'">
+        <b-button
+          v-b-modal.modal-primary
+          variant="primary"
+          class="btn-icon rounded-circle"
+        >
+          <PlusIcon size="1.2x" />
+        </b-button>
+        <b-modal
+          id="modal-primary"
+          modal-class="modal-primary"
+          centered
+          title="Add Subcategory"
+          hide-footer
+        >
+          <b-card-text>
+            <b-form @submit.prevent="addSubCategory">
+              <b-row>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Sub Category name (English)"
+                    label-for="v-cat-name-en"
+                  >
+                    <b-form-input
+                      id="v-cat-name-en"
+                      placeholder="Sub Category name (English)"
+                      required
+                      v-model="subCatEnglish"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Sub Category name (Arabic)"
+                    label-for="v-cat-name-ar"
+                  >
+                    <b-form-input
+                      id="v-cat-name-ar"
+                      type="text"
+                      placeholder="Sub Category name (Arabic)"
+                      required
+                      v-model="subCatArabic"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col offset-md="4">
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    type="submit"
+                    variant="primary"
+                    class="mr-1"
+                  >
+                    Add
+                  </b-button>
+                  <b-button
+                    v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+                    type="reset"
+                    variant="outline-secondary"
+                  >
+                    Reset
+                  </b-button>
+                </b-col>
+              </b-row>
+            </b-form>
+          </b-card-text>
+        </b-modal>
+      </div>
+
+      <div v-else-if="this.$route.name == 'editSubCategories'">
+        <b-button
+          v-b-modal.modal-primary
+          variant="primary"
+          class="btn-icon rounded-circle"
+        >
+          <PlusIcon size="1.2x" />
+        </b-button>
+        <b-modal
+          id="modal-primary"
+          modal-class="modal-primary"
+          centered
+          title="Add Sub Subcategory"
+          hide-footer
+        >
+          <b-card-text>
+            <b-form @submit.prevent="addSubSubCategory">
+              <b-row>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Sub Subcategory name (English)"
+                    label-for="v-cat-name-en"
+                  >
+                    <b-form-input
+                      id="v-cat-name-en"
+                      placeholder="Sub Subcategory name (English)"
+                      required
+                      v-model="subSubCatEnglish"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col cols="12">
+                  <b-form-group
+                    label="Sub Subcategory name (Arabic)"
+                    label-for="v-cat-name-ar"
+                  >
+                    <b-form-input
+                      id="v-cat-name-ar"
+                      type="text"
+                      placeholder="Sub Subcategory name (Arabic)"
+                      required
+                      v-model="subSubCatArabic"
+                    />
+                  </b-form-group>
+                </b-col>
+                <b-col offset-md="4">
+                  <b-button
+                    v-ripple.400="'rgba(255, 255, 255, 0.15)'"
+                    type="submit"
+                    variant="primary"
+                    class="mr-1"
+                  >
+                    Add
+                  </b-button>
+                  <b-button
+                    v-ripple.400="'rgba(186, 191, 199, 0.15)'"
+                    type="reset"
+                    variant="outline-secondary"
+                  >
+                    Reset
+                  </b-button>
+                </b-col>
+              </b-row>
+            </b-form>
+          </b-card-text>
+        </b-modal>
+      </div>
     </b-col>
   </b-row>
 </template>
@@ -157,6 +293,10 @@ export default {
   },
   data() {
     return {
+      subCatEnglish: "",
+      subCatArabic: "",
+      subSubCatEnglish: "",
+      subSubCatArabic: "",
       form: {
         catEnglish: "",
         catArabic: "",
@@ -183,6 +323,34 @@ export default {
       };
       axios
         .post("http://127.0.0.1:8001/api/add-category", data, config)
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(result);
+        });
+    },
+    addSubCategory() {
+      axios
+        .post("http://127.0.0.1:8001/api/add-subcategory", {
+          subCatEnglish: this.subCatEnglish,
+          subCatArabic: this.subCatArabic,
+          catID: this.$route.params.id,
+        })
+        .then((result) => {
+          console.log(result);
+        })
+        .catch((err) => {
+          console.log(result);
+        });
+    },
+    addSubSubCategory() {
+      axios
+        .post("http://127.0.0.1:8001/api/add-subsubcategory", {
+          subSubCatEnglish: this.subSubCatEnglish,
+          subSubCatArabic: this.subSubCatArabic,
+          subCatID: this.$route.params.id,
+        })
         .then((result) => {
           console.log(result);
         })

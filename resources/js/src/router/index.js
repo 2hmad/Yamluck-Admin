@@ -95,6 +95,62 @@ const router = new VueRouter({
             },
         },
         {
+            path: "/offers",
+            name: "offers",
+            component: () => import("@/views/Offers.vue"),
+            meta: {
+                pageTitle: "Offers",
+                breadcrumb: [
+                    {
+                        text: "Offers",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
+            path: "/payments",
+            name: "payments",
+            component: () => import("@/views/Payments.vue"),
+            meta: {
+                pageTitle: "Payments Invoices",
+                breadcrumb: [
+                    {
+                        text: "Payments Invoices",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
+            path: "/ads",
+            name: "ads",
+            component: () => import("@/views/Ads.vue"),
+            meta: {
+                pageTitle: "Ads",
+                breadcrumb: [
+                    {
+                        text: "Ads",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
+            path: "/notifications",
+            name: "notifications",
+            component: () => import("@/views/Notifications.vue"),
+            meta: {
+                pageTitle: "Notifications",
+                breadcrumb: [
+                    {
+                        text: "Notifications",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
             path: "/login",
             name: "login",
             component: () => import("@/views/Login.vue"),

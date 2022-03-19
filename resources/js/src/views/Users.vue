@@ -7,7 +7,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50</h3>
+              <h3 class="fw-bolder mb-75">{{ totalUsers }}</h3>
               <span>Total Users</span>
             </div>
             <div class="avatar bg-light-primary p-50">
@@ -22,7 +22,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50</h3>
+              <h3 class="fw-bolder mb-75">{{ activeUsers }}</h3>
               <span>Active Users</span>
             </div>
             <div class="avatar bg-light-success p-50">
@@ -39,7 +39,7 @@
             class="card-body d-flex align-items-center justify-content-between"
           >
             <div>
-              <h3 class="fw-bolder mb-75">50</h3>
+              <h3 class="fw-bolder mb-75">{{ pendingUsers }}</h3>
               <span>Pending Users</span>
             </div>
             <div class="avatar bg-light-warning p-50">
@@ -188,6 +188,7 @@ import {
 import { VueGoodTable } from "vue-good-table";
 import store from "@/store/index";
 import "vue-good-table/dist/vue-good-table.css";
+import axios from "axios";
 export default {
   components: {
     UsersIcon,
@@ -231,6 +232,9 @@ export default {
       ],
       rows: [],
       searchTerm: "",
+      totalUsers: null,
+      activeUsers: null,
+      pendingUsers: null,
     };
   },
   computed: {
@@ -247,6 +251,20 @@ export default {
     this.$http.get("/api/users").then((res) => {
       this.rows = res.data;
     });
+  },
+  mounted() {
+    axios
+      .get("/api/users/getTotalUsers")
+      .then((res) => (this.totalUsers = res.data))
+      .catch((err) => console.log(err));
+    axios
+      .get("/api/users/getActiveUsers")
+      .then((res) => (this.activeUsers = res.data))
+      .catch((err) => console.log(err));
+    axios
+      .get("/api/users/getPendingUsers")
+      .then((res) => (this.pendingUsers = res.data))
+      .catch((err) => console.log(err));
   },
 };
 </script>

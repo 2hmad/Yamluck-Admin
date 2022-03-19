@@ -19,4 +19,24 @@ export default [
         route: "categories",
         icon: "BoxIcon",
     },
+    {
+        title: "Offers",
+        route: "offers",
+        icon: "ShoppingCartIcon",
+    },
+    {
+        title: "Payments",
+        route: "payments",
+        icon: "LayersIcon",
+    },
+    {
+        title: "Ads",
+        route: "ads",
+        icon: "SidebarIcon",
+    },
+    {
+        title: "Notifications",
+        route: "notifications",
+        icon: "MessageCircleIcon",
+    },
 ];

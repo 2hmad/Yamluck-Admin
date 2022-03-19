@@ -11,4 +11,16 @@ class UsersController extends Controller
     {
         return Users::orderBy('id', 'DESC')->get();
     }
+    public function getTotalUsers()
+    {
+        return Users::count();
+    }
+    public function getActiveUsers()
+    {
+        return Users::where('verified', 1)->count();
+    }
+    public function getPendingUsers()
+    {
+        return Users::where('verified', 0)->count();
+    }
 }

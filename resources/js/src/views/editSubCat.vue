@@ -18,7 +18,7 @@
             {{ subSubCat.title_en }}
             <b-button
               v-ripple.400="'rgba(234, 84, 85, 0.15)'"
-              v-b-modal="`modal-danger-${subSubCats.id}`"
+              v-b-modal="`modal-danger-${subSubCat.id}`"
               variant="flat-danger"
               class="btn-icon rounded-circle"
               @click.prevent.stop
@@ -26,7 +26,7 @@
               <XIcon size="1x" />
             </b-button>
             <b-modal
-              :id="`modal-danger-${subSubCats.id}`"
+              :id="`modal-danger-${subSubCat.id}`"
               hide-footer
               modal-class="modal-danger"
               centered
@@ -41,7 +41,7 @@
                     name="delete"
                     class="btn btn-danger"
                     value="Confirm"
-                    @click.prevent="DeleteSubSubCategory([subSubCats.id])"
+                    @click.prevent="DeleteSubSubCategory([subSubCat.id])"
                   />
                 </form>
               </b-card-text>
