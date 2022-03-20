@@ -44,3 +44,4 @@ Route::group(['prefix' => 'users'], function () {
 });
 
 Route::get('offers', [OffersController::class, 'index']);
+Route::post('getSubs', [OffersController::class, 'getSubs']);

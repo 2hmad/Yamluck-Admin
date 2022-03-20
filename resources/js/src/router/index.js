@@ -109,6 +109,20 @@ const router = new VueRouter({
             },
         },
         {
+            path: "/editOffer/:id",
+            name: "editOffer",
+            component: () => import("@/views/editOffer.vue"),
+            meta: {
+                pageTitle: "Edit Offer",
+                breadcrumb: [
+                    {
+                        text: "Edit Offer",
+                        active: true,
+                    },
+                ],
+            },
+        },
+        {
             path: "/payments",
             name: "payments",
             component: () => import("@/views/Payments.vue"),

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div id="app">
     <div class="row">
       <div class="col-lg">
         <div class="card">
@@ -11,7 +11,9 @@
               <span>Total Offers</span>
             </div>
             <div class="avatar bg-light-primary p-50">
-              <span class="avatar-content"> <UsersIcon size="1.8x" /> </span>
+              <span class="avatar-content">
+                <ShoppingCartIcon size="1.8x" />
+              </span>
             </div>
           </div>
         </div>
@@ -27,7 +29,7 @@
             </div>
             <div class="avatar bg-light-success p-50">
               <span class="avatar-content">
-                <UserCheckIcon size="1.8x" />
+                <ShoppingCartIcon size="1.8x" />
               </span>
             </div>
           </div>
@@ -44,7 +46,7 @@
             </div>
             <div class="avatar bg-light-warning p-50">
               <span class="avatar-content">
-                <UserXIcon size="1.8x" />
+                <ShoppingCartIcon size="1.8x" />
               </span>
             </div>
           </div>
@@ -53,6 +55,15 @@
     </div>
 
     <!-- Offers -->
+    <b-input-group style="margin-bottom: 1%">
+      <b-input-group-prepend>
+        <b-button variant="outline-primary">
+          <feather-icon icon="SearchIcon" />
+        </b-button>
+      </b-input-group-prepend>
+      <b-form-input placeholder="Search" />
+    </b-input-group>
+
     <div class="row">
       <div class="col-md-6 col-lg-4" v-for="item in items" :key="item.id">
         <div class="card">
@@ -69,7 +80,9 @@
           <div class="card-body">
             <h4 class="card-title">{{ item.title_en }}</h4>
             <h6 class="card-subtitle text-muted mb-2">
-              {{ item.price }} USD | <Users size="1.8x" />{{ item.curr_subs }} /
+              {{ item.price }} USD | <UsersIcon size="1.1x" />
+              {{ item.curr_subs }}
+              /
               {{ item.max_subs }}
             </h6>
             <p
@@ -95,11 +108,28 @@
       v-model="currentPage"
       :total-rows="totalRows"
       :per-page="perPage"
-    />
+      align="center"
+      first-number
+      last-number
+      prev-class="prev-item"
+      next-class="next-item"
+    >
+      <template #prev-text>
+        <feather-icon icon="ChevronLeftIcon" size="18" />
+      </template>
+      <template #next-text>
+        <feather-icon icon="ChevronRightIcon" size="18" />
+      </template>
+    </b-pagination>
   </div>
 </template>
 <script>
-import { UsersIcon, UserCheckIcon, UserXIcon } from "vue-feather-icons";
+import {
+  UsersIcon,
+  UserCheckIcon,
+  UserXIcon,
+  ShoppingCartIcon,
+} from "vue-feather-icons";
 import {
   BAvatar,
   BBadge,
@@ -109,6 +139,12 @@ import {
   BDropdown,
   BDropdownItem,
   BPagination,
+  BInputGroup,
+  BInputGroupAppend,
+  BInputGroupPrepend,
+  BRow,
+  BCol,
+  BButton,
 } from "bootstrap-vue";
 import axios from "axios";
 export default {
@@ -124,34 +160,29 @@ export default {
     BDropdown,
     BDropdownItem,
     BPagination,
+    ShoppingCartIcon,
+    BInputGroup,
+    BInputGroupAppend,
+    BInputGroupPrepend,
+    BRow,
+    BCol,
+    BButton,
   },
   data() {
     return {
-      items: [],
+      data: [],
       currentPage: 1,
-      perPage: 1,
+      perPage: 21,
       totalOffers: 0,
       openOffers: 0,
       closedOffers: 0,
       param: this.$route.params.id,
     };
   },
-  computed: {
-    items() {
-      const items = this.items;
-      return items.slice(
-        (this.currentPage - 1) * this.perPage,
-        this.currentPage * this.perPage
-      );
-    },
-    totalRows() {
-      return this.items.length;
-    },
-  },
   mounted() {
     axios
       .get("/api/offers")
-      .then((res) => (this.items = res.data))
+      .then((res) => (this.data = res.data))
       .catch((err) => console.log(err));
     // axios
     //   .get("/api/users/getTotalUsers")
@@ -165,6 +196,18 @@ export default {
     //   .get("/api/users/getPendingUsers")
     //   .then((res) => (this.pendingUsers = res.data))
     //   .catch((err) => console.log(err));
+  },
+  computed: {
+    items() {
+      const items = this.data;
+      return items.slice(
+        (this.currentPage - 1) * this.perPage,
+        this.currentPage * this.perPage
+      );
+    },
+    totalRows() {
+      return this.data.length;
+    },
   },
 };
 </script>
