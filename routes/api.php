@@ -2,7 +2,11 @@
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\ActivitiesController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AdsController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\InvoicesController;
+use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\OffersController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
@@ -45,3 +49,14 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::get('offers', [OffersController::class, 'index']);
 Route::post('getSubs', [OffersController::class, 'getSubs']);
+Route::post('offer/updateOffer', [OffersController::class, 'updateOffer']);
+Route::post('offer/finishOffer', [OffersController::class, 'finishOffer']);
+
+Route::get('invoices', [InvoicesController::class, 'index']);
+
+Route::get('getAd', [AdsController::class, 'getAd']);
+
+Route::post('send-notify', [NotificationsController::class, 'sendNotify']);
+
+Route::post('admin/login', [AdminController::class, 'login']);
+Route::post('admin/add', [AdminController::class, 'addAdmin']);

@@ -1,21 +1,31 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from "../store";
 
 Vue.use(VueRouter);
 
 const router = new VueRouter({
     mode: "history",
-    base: process.env.BASE_URL,
     scrollBehavior() {
         return { x: 0, y: 0 };
     },
     routes: [
+        {
+            path: "/login",
+            name: "login",
+            component: () => import("@/views/Login.vue"),
+            meta: {
+                layout: "full",
+                guest: true,
+            },
+        },
         {
             path: "/",
             name: "home",
             component: () => import("@/views/Home.vue"),
             meta: {
                 pageTitle: "Dashboard",
+                requiresAuth: true,
                 breadcrumb: [
                     {
                         text: "Dashboard",
@@ -30,6 +40,7 @@ const router = new VueRouter({
             component: () => import("@/views/Users.vue"),
             meta: {
                 pageTitle: "Users",
+                requiresAuth: true,
                 breadcrumb: [
                     {
                         text: "Users",
@@ -50,6 +61,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -64,6 +76,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -78,6 +91,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -92,6 +106,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -106,6 +121,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -120,6 +136,22 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
+            },
+        },
+        {
+            path: "/addOffer",
+            name: "addOffer",
+            component: () => import("@/views/addOffer.vue"),
+            meta: {
+                pageTitle: "Add Offer",
+                breadcrumb: [
+                    {
+                        text: "Add Offer",
+                        active: true,
+                    },
+                ],
+                requiresAuth: true,
             },
         },
         {
@@ -134,6 +166,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -148,6 +181,7 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
@@ -162,14 +196,22 @@ const router = new VueRouter({
                         active: true,
                     },
                 ],
+                requiresAuth: true,
             },
         },
         {
-            path: "/login",
-            name: "login",
-            component: () => import("@/views/Login.vue"),
+            path: "/add-admins",
+            name: "add-admins",
+            component: () => import("@/views/addAdmins.vue"),
             meta: {
-                layout: "full",
+                pageTitle: "Add Admins",
+                breadcrumb: [
+                    {
+                        text: "Add Admins",
+                        active: true,
+                    },
+                ],
+                requiresAuth: true,
             },
         },
         {
@@ -187,13 +229,34 @@ const router = new VueRouter({
     ],
 });
 
-// ? For splash screen
-// Remove afterEach hook if you are not using splash screen
 router.afterEach(() => {
-    // Remove initial loading
     const appLoading = document.getElementById("loading-bg");
     if (appLoading) {
         appLoading.style.display = "none";
+    }
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresAuth)) {
+        if (store.getters.isAuthenticated) {
+            next();
+            return;
+        }
+        next("/login");
+    } else {
+        next();
+    }
+});
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.guest)) {
+        if (store.getters.isAuthenticated) {
+            next("/");
+            return;
+        }
+        next();
+    } else {
+        next();
     }
 });
 

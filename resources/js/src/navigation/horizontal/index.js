@@ -43,6 +43,11 @@ export default [
                 route: "notifications",
                 icon: "MessageCircleIcon",
             },
+            {
+                title: "Add Admins",
+                route: "add-admins",
+                icon: "UserIcon",
+            },
         ],
     },
 ];

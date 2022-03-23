@@ -1,68 +1,25 @@
 <template>
   <div id="app">
-    <div class="row">
-      <div class="col-lg">
-        <div class="card">
-          <div
-            class="card-body d-flex align-items-center justify-content-between"
-          >
-            <div>
-              <h3 class="fw-bolder mb-75">{{ totalOffers }}</h3>
-              <span>Total Offers</span>
-            </div>
-            <div class="avatar bg-light-primary p-50">
-              <span class="avatar-content">
-                <ShoppingCartIcon size="1.8x" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg">
-        <div class="card">
-          <div
-            class="card-body d-flex align-items-center justify-content-between"
-          >
-            <div>
-              <h3 class="fw-bolder mb-75">{{ openOffers }}</h3>
-              <span>Open Offers</span>
-            </div>
-            <div class="avatar bg-light-success p-50">
-              <span class="avatar-content">
-                <ShoppingCartIcon size="1.8x" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg">
-        <div class="card">
-          <div
-            class="card-body d-flex align-items-center justify-content-between"
-          >
-            <div>
-              <h3 class="fw-bolder mb-75">{{ closedOffers }}</h3>
-              <span>Closed Offers</span>
-            </div>
-            <div class="avatar bg-light-warning p-50">
-              <span class="avatar-content">
-                <ShoppingCartIcon size="1.8x" />
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Offers -->
-    <b-input-group style="margin-bottom: 1%">
-      <b-input-group-prepend>
-        <b-button variant="outline-primary">
-          <feather-icon icon="SearchIcon" />
-        </b-button>
-      </b-input-group-prepend>
-      <b-form-input placeholder="Search" />
-    </b-input-group>
+    <b-row>
+      <b-col md="10">
+        <b-input-group style="margin-bottom: 1%">
+          <b-input-group-prepend>
+            <b-button variant="outline-primary">
+              <feather-icon icon="SearchIcon" />
+            </b-button>
+          </b-input-group-prepend>
+          <b-form-input placeholder="Search" />
+        </b-input-group>
+      </b-col>
+      <b-col md="2">
+        <router-link to="/addOffer">
+          <b-button variant="outline-primary">
+            <feather-icon icon="PlusIcon" /> Add Offer
+          </b-button>
+        </router-link>
+      </b-col>
+    </b-row>
 
     <div class="row">
       <div class="col-md-6 col-lg-4" v-for="item in items" :key="item.id">
