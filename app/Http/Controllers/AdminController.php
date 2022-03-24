@@ -13,7 +13,7 @@ class AdminController extends Controller
         if ($request->email !== '' && $request->password !== '') {
             $checkUser = DB::table('admins')->where('email', '=', $request->email)->first();
             if ($checkUser !== null) {
-                $checkCredentials = DB::table('admins')->where('email', '=', $request->email)->where('password', '=', $request->password)->first();
+                $checkCredentials = DB::table('admins')->where('email', '=', $request->email)->where('password', '=', Hash::check($checkUser->password, $request->password))->first();
                 if ($checkCredentials !== null) {
                     return $checkCredentials;
                 } else {
