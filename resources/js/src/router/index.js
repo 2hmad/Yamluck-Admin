@@ -1,6 +1,21 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import store from "../store";
+import Login from "@/views/Login.vue";
+import Home from "@/views/Home.vue";
+import Users from "@/views/Users.vue";
+import Activities from "@/views/Activities.vue";
+import Categories from "@/views/Categories.vue";
+import EditCat from "@/views/EditCat.vue";
+import EditSubCat from "@/views/EditSubCat.vue";
+import Offers from "@/views/Offers.vue";
+import editOffer from "@/views/editOffer.vue";
+import addOffer from "@/views/addOffer.vue";
+import Payments from "@/views/Payments.vue";
+import Ads from "@/views/Ads.vue";
+import Notifications from "@/views/Notifications.vue";
+import addAdmins from "@/views/addAdmins.vue";
+import Error404 from "@/views/error/Error404.vue";
 
 Vue.use(VueRouter);
 
@@ -13,7 +28,7 @@ const router = new VueRouter({
         {
             path: "/login",
             name: "login",
-            component: () => import("@/views/Login.vue"),
+            component: Login,
             meta: {
                 layout: "full",
                 guest: true,
@@ -22,7 +37,7 @@ const router = new VueRouter({
         {
             path: "/",
             name: "home",
-            component: () => import("@/views/Home.vue"),
+            component: Home,
             meta: {
                 pageTitle: "Dashboard",
                 requiresAuth: true,
@@ -37,7 +52,7 @@ const router = new VueRouter({
         {
             path: "/users",
             name: "users",
-            component: () => import("@/views/Users.vue"),
+            component: Users,
             meta: {
                 pageTitle: "Users",
                 requiresAuth: true,
@@ -52,7 +67,7 @@ const router = new VueRouter({
         {
             path: "/activities",
             name: "activities",
-            component: () => import("@/views/Activities.vue"),
+            component: Activities,
             meta: {
                 pageTitle: "Activities",
                 breadcrumb: [
@@ -67,7 +82,7 @@ const router = new VueRouter({
         {
             path: "/categories",
             name: "categories",
-            component: () => import("@/views/Categories.vue"),
+            component: Categories,
             meta: {
                 pageTitle: "Categories",
                 breadcrumb: [
@@ -82,7 +97,7 @@ const router = new VueRouter({
         {
             path: "/editCat/:id",
             name: "editCategories",
-            component: () => import("@/views/EditCat.vue"),
+            component: EditCat,
             meta: {
                 pageTitle: "Edit Category",
                 breadcrumb: [
@@ -97,7 +112,7 @@ const router = new VueRouter({
         {
             path: "/editSubCat/:id",
             name: "editSubCategories",
-            component: () => import("@/views/EditSubCat.vue"),
+            component: EditSubCat,
             meta: {
                 pageTitle: "Edit SubCategory",
                 breadcrumb: [
@@ -112,7 +127,7 @@ const router = new VueRouter({
         {
             path: "/offers",
             name: "offers",
-            component: () => import("@/views/Offers.vue"),
+            component: Offers,
             meta: {
                 pageTitle: "Offers",
                 breadcrumb: [
@@ -127,7 +142,7 @@ const router = new VueRouter({
         {
             path: "/editOffer/:id",
             name: "editOffer",
-            component: () => import("@/views/editOffer.vue"),
+            component: editOffer,
             meta: {
                 pageTitle: "Edit Offer",
                 breadcrumb: [
@@ -142,7 +157,7 @@ const router = new VueRouter({
         {
             path: "/addOffer",
             name: "addOffer",
-            component: () => import("@/views/addOffer.vue"),
+            component: addOffer,
             meta: {
                 pageTitle: "Add Offer",
                 breadcrumb: [
@@ -157,7 +172,7 @@ const router = new VueRouter({
         {
             path: "/payments",
             name: "payments",
-            component: () => import("@/views/Payments.vue"),
+            component: Payments,
             meta: {
                 pageTitle: "Payments Invoices",
                 breadcrumb: [
@@ -172,7 +187,7 @@ const router = new VueRouter({
         {
             path: "/ads",
             name: "ads",
-            component: () => import("@/views/Ads.vue"),
+            component: Ads,
             meta: {
                 pageTitle: "Ads",
                 breadcrumb: [
@@ -187,7 +202,7 @@ const router = new VueRouter({
         {
             path: "/notifications",
             name: "notifications",
-            component: () => import("@/views/Notifications.vue"),
+            component: Notifications,
             meta: {
                 pageTitle: "Notifications",
                 breadcrumb: [
@@ -202,7 +217,7 @@ const router = new VueRouter({
         {
             path: "/add-admins",
             name: "add-admins",
-            component: () => import("@/views/addAdmins.vue"),
+            component: addAdmins,
             meta: {
                 pageTitle: "Add Admins",
                 breadcrumb: [
@@ -217,7 +232,7 @@ const router = new VueRouter({
         {
             path: "/error-404",
             name: "error-404",
-            component: () => import("@/views/error/Error404.vue"),
+            component: Error404,
             meta: {
                 layout: "full",
             },
